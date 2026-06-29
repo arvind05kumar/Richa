@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be Mine Forever? ❤️</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;500;600;700&family=Sacramento&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/animations.css">
+
+    <!-- External Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Canvas Background & Cursor Trail Layers -->
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- Loading Screen Preloader -->
+    <div id="preloader">
+        <div class="loader-heart">❤️</div>
+        <div class="loader-text">Loading Love Story...</div>
+    </div>
+
+    <!-- Floating Audio Control Button -->
+    <button class="audio-control" id="audio-toggle" title="Play Music">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+        </svg>
+    </button>
+
+    <!-- Main App Container -->
+    <div id="app-container">
+
+        <!-- LANDING SCREEN -->
+        <section class="section" id="landing-section">
+            <h1 class="landing-title">Hey Richa ❤️</h1>
+            <p class="landing-subtitle">I have something special to ask you...</p>
+
+            <button class="continue-btn" id="continue-btn">
+                <span>Continue</span>
+                <svg class="down-arrow" viewBox="0 0 24 24">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
+                </svg>
+            </button>
+        </section>
+
+        <!-- PROPOSAL SECTION -->
+        <section class="section" id="proposal-section">
+            <div class="proposal-card glass-panel glass-card-glow">
+                <p class="romantic-message">
+                    "From the day I met you,<br>my life became more beautiful."
+                </p>
+                <p class="romantic-message">
+                    "I don't know what the future holds,<br>but I know I want you in it."
+                </p>
+
+                <h2 class="proposal-question">Will You Be Mine Forever? ❤️</h2>
+
+                <div class="buttons-container">
+                    <button class="btn btn-yes" id="yes-btn">❤️ YES</button>
+                    <button class="btn btn-no" id="no-btn">💔 NO</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CELEBRATORY SUCCESS SECTION -->
+        <section class="section" id="success-section">
+            <div class="success-container">
+                <h1 class="yay-title">YAYYYYY ❤️</h1>
+                <p class="happiest-subtitle">You just made me the happiest person alive.</p>
+                <div class="love-forever-reveal">I Love You Forever ❤️</div>
+
+                <!-- Cute Animated Couple Illustration -->
+                <div class="couple-illustration">
+                    <svg viewBox="0 0 500 400" width="100%" height="100%">
+                        <defs>
+                            <linearGradient id="gradHeart" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff4b72" />
+                                <stop offset="100%" stop-color="#ff758c" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Floating Big Glowing Heart Background -->
+                        <path
+                            d="M250,90 C200,20 100,50 100,140 C100,220 250,320 250,320 C250,320 400,220 400,140 C400,50 300,20 250,90 Z"
+                            fill="url(#gradHeart)" opacity="0.15" />
+
+                        <!-- Couple Silhouettes with Stargazing Glow -->
+                        <circle cx="210" cy="180" r="35" fill="#e0c3fc" />
+                        <circle cx="290" cy="190" r="30" fill="#ff758c" />
+                        <path d="M165,300 C165,230 255,230 255,300 Z" fill="#e0c3fc" />
+                        <path d="M245,300 C245,240 335,240 335,300 Z" fill="#ff758c" />
+                        <!-- Floating Mini Sparkle Hearts around Couple -->
+                        <path
+                            d="M250,130 C245,120 235,120 235,130 C235,140 250,150 250,150 C250,150 265,140 265,130 C265,120 255,120 250,130 Z"
+                            fill="#ff4b72" />
+                        <path
+                            d="M190,110 C187,103 180,103 180,110 C180,117 190,123 190,123 C190,123 200,117 200,110 C200,103 193,103 190,110 Z"
+                            fill="#e0c3fc" />
+                        <path
+                            d="M310,120 C307,113 300,113 300,120 C300,127 310,133 310,133 C310,133 320,127 320,120 C320,113 313,113 310,120 Z"
+                            fill="#ff758c" />
+                    </svg>
+                </div>
+
+                <div class="journey-start-text">Our Journey Starts Today</div>
+
+                <!-- Live Timer Card -->
+                <div class="timer-card glass-panel">
+                    <h3 class="timer-title">Together Since</h3>
+                    <div class="timer-grid">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="timer-days">00</span>
+                            <span class="timer-label">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="timer-hours">00</span>
+                            <span class="timer-label">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="timer-minutes">00</span>
+                            <span class="timer-label">Minutes</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="timer-seconds">00</span>
+                            <span class="timer-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Gallery Section -->
+                <div class="gallery-section">
+                    <h3 class="gallery-title">Our Memories</h3>
+                    <div class="gallery-grid" id="gallery-grid">
+                        <!-- Dynamically populated from js/config.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Easter Egg Modal -->
+    <div class="modal-overlay" id="easter-egg-modal">
+        <div class="modal-content glass-panel glass-card-glow">
+            <h2 class="modal-text">You're too cute 😂❤️</h2>
+            <button class="modal-close-btn">Aww Okay! 🥰</button>
+        </div>
+    </div>
+
+    <!-- Main JavaScript Modules Initialization -->
+    <script type="module">
+        import { BackgroundEngine } from './js/background.js';
+        import { CursorTrailEngine } from './js/cursorTrail.js';
+        import { EvasiveButton } from './js/evvasiveButton.js';
+        import { MusicPlayer } from './js/musicPlayer.js';
+        import { GalleryTimerEngine } from './js/galleryTimer.js';
+        import { ProposalController } from './js/proposalLogic.js';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            new BackgroundEngine('bg-canvas');
+            new CursorTrailEngine('cursor-canvas');
+            new EvasiveButton('no-btn', 'yes-btn', 'easter-egg-modal');
+            const musicPlayer = new MusicPlayer('audio-toggle');
+            new GalleryTimerEngine();
+            new ProposalController(musicPlayer);
+        });
+    </script>
+</body>
+
+</html>
