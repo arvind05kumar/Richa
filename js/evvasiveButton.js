@@ -1,8 +1,7 @@
 /**
  * ============================================================================
- * EVASIVE NO BUTTON ENGINE & EASTER EGG LOGIC (MOBILE OPTIMIZED)
- * Makes the NO button playfully dodge mouse/touch, change texts, scale/rotate,
- * and trigger an Easter egg after 5 attempts.
+ * EVASIVE NO BUTTON ENGINE & EASTER EGG LOGIC (SMOOTH & CONSTRAINED)
+ * Prevents button from going out of frame and slows down dodging speed.
  * ============================================================================
  */
 
@@ -18,6 +17,7 @@ export class EvasiveButton {
         this.attempts = 0;
         this.textIndex = 0;
         this.isMovedFixed = false;
+        this.isAnimating = false;
 
         this.initEvents();
     }
@@ -26,7 +26,7 @@ export class EvasiveButton {
         // Proximity detection on mousemove
         window.addEventListener('mousemove', (e) => this.checkProximity(e.clientX, e.clientY));
 
-        // Mobile touch proximity / touchmove / pointerdown
+        // Mobile touch proximity
         const handleTouchNear = (e) => {
             if (e.touches && e.touches[0]) {
                 this.checkProximity(e.touches[0].clientX, e.touches[0].clientY);
@@ -35,7 +35,7 @@ export class EvasiveButton {
 
         window.addEventListener('touchmove', handleTouchNear, { passive: true });
 
-        // Direct tap attempt on mobile
+        // Direct tap / click attempt
         const handleDirectTap = (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -48,12 +48,15 @@ export class EvasiveButton {
     }
 
     checkProximity(x, y) {
+        if (this.isAnimating) return;
+
         const rect = this.noBtn.getBoundingClientRect();
         const btnCenterX = rect.left + rect.width / 2;
         const btnCenterY = rect.top + rect.height / 2;
 
         const distance = Math.hypot(x - btnCenterX, y - btnCenterY);
-        const threshold = 130; // Increased distance for responsive mobile dodging
+        // Moderate threshold so it doesn't jump prematurely
+        const threshold = window.innerWidth < 600 ? 70 : 90;
 
         if (distance < threshold) {
             this.dodge();
@@ -61,25 +64,42 @@ export class EvasiveButton {
     }
 
     dodge() {
+        if (this.isAnimating) return;
+        this.isAnimating = true;
         this.attempts++;
 
         if (!this.isMovedFixed) {
+            // Store current position before switching to fixed
+            const rect = this.noBtn.getBoundingClientRect();
             this.noBtn.style.position = 'fixed';
+            this.noBtn.style.left = `${rect.left}px`;
+            this.noBtn.style.top = `${rect.top}px`;
             this.isMovedFixed = true;
         }
 
-        const btnWidth = this.noBtn.offsetWidth || 120;
+        const btnWidth = this.noBtn.offsetWidth || 130;
         const btnHeight = this.noBtn.offsetHeight || 50;
 
-        const padding = 40;
-        const maxX = window.innerWidth - btnWidth - padding;
-        const maxY = window.innerHeight - btnHeight - padding;
+        // Strict safe margins so the button NEVER touches screen edges or goes out of frame
+        const paddingX = Math.min(60, window.innerWidth * 0.1);
+        const paddingY = Math.min(80, window.innerHeight * 0.1);
 
-        const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-        const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+        const minX = paddingX;
+        const maxX = window.innerWidth - btnWidth - paddingX;
 
-        const randomRotate = (Math.random() - 0.5) * 50;
-        const randomScale = Math.random() * 0.35 + 0.75;
+        const minY = paddingY;
+        const maxY = window.innerHeight - btnHeight - paddingY;
+
+        // Pick random safe coordinates within viewport
+        let randomX = Math.floor(Math.random() * (maxX - minX)) + minX;
+        let randomY = Math.floor(Math.random() * (maxY - minY)) + minY;
+
+        // Gentle rotation (-15deg to 15deg) and subtle scale (0.85 to 1.05)
+        const randomRotate = (Math.random() - 0.5) * 30;
+        const randomScale = Math.random() * 0.2 + 0.85;
+
+        // Smooth, realistic glide duration
+        const duration = 0.5;
 
         if (window.gsap) {
             gsap.to(this.noBtn, {
@@ -87,20 +107,28 @@ export class EvasiveButton {
                 top: `${randomY}px`,
                 rotate: randomRotate,
                 scale: randomScale,
-                duration: 0.35,
-                ease: "power2.out"
+                duration: duration,
+                ease: "power2.out",
+                onComplete: () => {
+                    this.isAnimating = false;
+                }
             });
         } else {
             this.noBtn.style.left = `${randomX}px`;
             this.noBtn.style.top = `${randomY}px`;
             this.noBtn.style.transform = `rotate(${randomRotate}deg) scale(${randomScale})`;
-            this.noBtn.style.transition = 'all 0.35s ease';
+            this.noBtn.style.transition = `all ${duration}s ease`;
+            setTimeout(() => {
+                this.isAnimating = false;
+            }, duration * 1000);
         }
 
+        // Cycle text slowly
         const textOptions = CONFIG.noButtonTexts;
         this.noBtn.textContent = textOptions[this.textIndex % textOptions.length];
         this.textIndex++;
 
+        // Trigger Easter Egg at 5 attempts
         if (this.attempts === 5) {
             this.triggerEasterEgg();
         }
