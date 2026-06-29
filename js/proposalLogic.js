@@ -142,7 +142,6 @@ export class ProposalController {
                   .from('.love-forever-reveal', { scale: 0.8, opacity: 0, duration: 1.2, ease: "power3.out" }, "-=0.2")
                   .from('.couple-illustration', { y: 40, opacity: 0, duration: 1, ease: "back.out(1.4)" }, "-=0.5")
                   .from('.journey-start-text', { opacity: 0, duration: 0.8 }, "-=0.3")
-                  .from('.timer-card', { y: 30, opacity: 0, duration: 0.8 }, "-=0.2")
                   .from('.gallery-section', { y: 40, opacity: 0, duration: 0.8 }, "-=0.4");
             }
         });

@@ -46,38 +46,18 @@ export const CONFIG = {
     // Easter egg message after 5 attempts of hovering/clicking NO
     easterEggPopup: "You're too cute 😂❤️",
 
-    // Memories Gallery (6 romantic photos with titles)
-    // Replace these URLs with your own photo links or local file paths (e.g., assets/images/photo1.jpg)
+    // Memories Gallery
     memories: [
         {
-            url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
-            title: "First Magical Date",
+            url: "assets/images/photo1.jpg",
+            title: "Gym Partner for Life 💪❤️",
             date: "Memory #1"
         },
         {
-            url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
-            title: "Unforgettable Sunset Walk",
+            url: "assets/images/photo2.jpg",
+            title: "Cute Workout Moments 🥰",
             date: "Memory #2"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
-            title: "Laughs & Coffee",
-            date: "Memory #3"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
-            title: "Stargazing Nights",
-            date: "Memory #4"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=800&q=80",
-            title: "Weekend Getaway",
-            date: "Memory #5"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
-            title: "Everyday Magic",
-            date: "Memory #6"
         }
     ]
 };
+
